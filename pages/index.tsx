@@ -8,36 +8,6 @@ import { useEffect } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  // You can remove this, just added for testing
-  const callAPI = async (message: string) => {
-    const response = await (
-      await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${await new jose.SignJWT({
-            'urn:example:claim': true,
-          })
-            .setProtectedHeader({ alg: 'HS256' })
-            .setIssuedAt()
-            .setIssuer('urn:example:issuer')
-            .setAudience('urn:example:audience')
-            .setExpirationTime('1m')
-            .sign(
-              new TextEncoder().encode(`${process.env.JWT_KEY}`)
-            )}`,
-        },
-        body: JSON.stringify({ message}),
-      })
-    ).json()
-    console.log('response ', response)
-    return response
-  }
-
-  useEffect(() => {
-    callAPI('What is the meaning of life?')
-  }, [])
-
   return (
     <>
       <Head>

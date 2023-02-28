@@ -14,7 +14,7 @@ export const verifyToken = async (token: string) => {
   try {
     const decoded = await jose.jwtVerify(
       token,
-      new TextEncoder().encode(`${process.env.NEXT_PUBLIC_JWT_KEY}`)
+      new TextEncoder().encode(`${process.env.JWT_KEY}`)
     )
     return decoded
   } catch (err) {
