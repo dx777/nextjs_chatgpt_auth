@@ -9,9 +9,10 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   // You can remove this, just added for testing
-  const callAPI = async () => {
-   const r = await (
+  const callAPI = async (message: string) => {
+    const response = await (
       await fetch('/api/chat', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${await new jose.SignJWT({
@@ -21,19 +22,20 @@ export default function Home() {
             .setIssuedAt()
             .setIssuer('urn:example:issuer')
             .setAudience('urn:example:audience')
-            .setExpirationTime('2h')
+            .setExpirationTime('1m')
             .sign(
-              new TextEncoder().encode(`${process.env.NEXT_PUBLIC_JWT_KEY}`)
+              new TextEncoder().encode(`${process.env.JWT_KEY}`)
             )}`,
         },
+        body: JSON.stringify({ message}),
       })
     ).json()
-    console.log('r ', r)
-    return r
+    console.log('response ', response)
+    return response
   }
 
   useEffect(() => {
-    callAPI()
+    callAPI('How to say hello in japanese?')
   }, [])
 
   return (
