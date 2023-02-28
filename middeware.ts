@@ -9,10 +9,10 @@ export const middleware: NextMiddleware = () => {
   })
 }
 
-export const verifyToken = (token: string) => {
+export const verifyToken = async (token: string) => {
   // Get token from request headers
   try {
-    const decoded = jose.jwtVerify(
+    const decoded = await jose.jwtVerify(
       token,
       new TextEncoder().encode(`${process.env.NEXT_PUBLIC_JWT_KEY}`)
     )
@@ -22,7 +22,7 @@ export const verifyToken = (token: string) => {
   }
 }
 
-export function authenticate(
+export async function authenticate(
   req: NextApiRequest,
   res: NextApiResponse,
   next: () => void
@@ -33,7 +33,7 @@ export function authenticate(
   }
 
   try {
-    const decoded = verifyToken(token)
+    const decoded = await verifyToken(token)
     next()
   } catch (err) {
     return res.status(401).json({ error: 'Unauthorized' })

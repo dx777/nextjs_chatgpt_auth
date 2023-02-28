@@ -35,7 +35,7 @@ export default function Home() {
   }
 
   useEffect(() => {
-    callAPI('How to say hello in japanese?')
+    callAPI('What is the meaning of life?')
   }, [])
 
   return (
