@@ -12,12 +12,13 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
     authenticate(req, res, async () => {
+        const turboModel:string = "gpt-3.5-turbo";
         const api = new ChatGPTAPI({
-        apiKey: process.env.OPENAI_API_KEY,
+        apiKey: process.env.OPENAI_API_KEY || '',
         completionParams: {
           temperature: 0,
           max_tokens: 256,
-          model: 'gpt-3.5-turbo'
+          model: turboModel
         }
      })
 
