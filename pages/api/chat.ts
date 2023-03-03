@@ -12,9 +12,14 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
     authenticate(req, res, async () => {
-    const api = new ChatGPTAPI({
-      apiKey: process.env.OPENAI_API_KEY || '',
-    });
+        const api = new ChatGPTAPI({
+            apiKey: process.env.OPENAI_API_KEY,
+            completionParams: {
+              temperature: 0,
+              max_tokens: 256,
+              model: 'gpt-3.5-turbo'
+            }
+     })
 
     const openAiRes = await api.sendMessage(req.body.message);
     res.status(200).json({ response: openAiRes.text });
